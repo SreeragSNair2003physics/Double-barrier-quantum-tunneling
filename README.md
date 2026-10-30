@@ -46,17 +46,13 @@ The initial state is a normalized Gaussian wave packet with a complex phase corr
 
 ## 2. Mathematical Framework
 
+
 ### 2.1 Time-dependent Schrödinger equation
 
 The evolution of the wavefunction is governed by
 
 $$
-i\hbar\frac{\partial\psi(x,t)}{\partial t}
-=
--\frac{\hbar^2}{2m}
-\frac{\partial^2\psi(x,t)}{\partial x^2}
-+
-V(x)\psi(x,t).
+i\hbar\frac{\partial\psi(x,t)}{\partial t}=-\frac{\hbar^{2}}{2m}\frac{\partial^{2}\psi(x,t)}{\partial x^{2}}+V(x)\psi(x,t)
 $$
 
 Here, $\psi(x,t)$ is the complex wavefunction, $m$ is the electron mass, and $V(x)$ is the double-barrier potential.
@@ -64,33 +60,29 @@ Here, $\psi(x,t)$ is the complex wavefunction, $m$ is the electron mass, and $V(
 The probability density is
 
 $$
-\rho(x,t)=|\psi(x,t)|^2.
+\rho(x,t)=\left|\psi(x,t)\right|^{2}
 $$
 
 For a normalized wavefunction, the total probability satisfies
 
 $$
-\int |\psi(x,t)|^2\,dx=1.
+\int_{-\infty}^{\infty}\left|\psi(x,t)\right|^{2}\,dx=1
 $$
 
 ### 2.2 Crank–Nicolson time evolution
 
 The time-dependent simulation uses the Crank–Nicolson method, an implicit finite-difference scheme.
 
-Writing the Schrödinger equation in terms of the Hamiltonian operator $\hat H$, the time-stepping equation is
+Writing the Schrödinger equation in terms of the Hamiltonian operator $H$, the time-stepping equation is
 
 $$
-\left(I+\frac{i\Delta t}{2\hbar}H\right)\psi^{n+1}
-=
-\left(I-\frac{i\Delta t}{2\hbar}H\right)\psi^n.
+\left(I+\frac{i\Delta t}{2\hbar}H\right)\psi^{n+1}=\left(I-\frac{i\Delta t}{2\hbar}H\right)\psi^{n}
 $$
 
 The spatial second derivative is discretized on a uniform grid:
 
 $$
-\frac{\partial^2\psi}{\partial x^2}
-\approx
-\frac{\psi_{j+1}-2\psi_j+\psi_{j-1}}{\Delta x^2}.
+\frac{\partial^{2}\psi}{\partial x^{2}}\approx\frac{\psi_{j+1}-2\psi_j+\psi_{j-1}}{(\Delta x)^{2}}
 $$
 
 This produces a tridiagonal discrete Hamiltonian. The resulting linear system is solved using the **Thomas algorithm**, an efficient solver for tridiagonal matrices.
@@ -102,12 +94,7 @@ The simulation tracks the probability density as the incident wave packet intera
 The stationary-state calculation solves the time-independent Schrödinger equation,
 
 $$
--\frac{\hbar^2}{2m}
-\frac{d^2\psi(x)}{dx^2}
-+
-V(x)\psi(x)
-=
-E\psi(x).
+-\frac{\hbar^{2}}{2m}\frac{d^{2}\psi(x)}{dx^{2}}+V(x)\psi(x)=E\psi(x)
 $$
 
 Within each constant-potential region, the wavefunction can be represented as a superposition of right-moving and left-moving components.
@@ -119,12 +106,11 @@ The transfer-matrix calculation evaluates transmission and reflection probabilit
 For identical free-particle regions on both sides of a real, conservative potential, probability conservation requires
 
 $$
-T(E)+R(E)=1.
+T(E)+R(E)=1
 $$
 
 This provides an important validation condition for the stationary calculation.
 
----
 
 ## 3. Numerical Results
 
